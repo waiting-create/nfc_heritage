@@ -1,0 +1,2 @@
+把音频文件放在这个目录，命名为 scene.mp3 即可，页面会自动加载播放。
+支持 mp3 / m4a / wav；如需改名，同步改 HTML 中 <audio src="assets/scene.mp3"> 的路径。
