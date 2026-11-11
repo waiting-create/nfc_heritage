@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>使用手册 · 一碰即达 NFC 标准包</title>
+<style>
+:root{--paper:#E9E3D5;--paper-2:#EFE9DB;--ink:#1C1A17;--ink-soft:#3D3833;--rust:#B84A1E;--steel:#2C4454;--line:#1C1A17}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;font-size:15px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:30px 24px 60px}
+.top{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:24px}
+.kicker{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.2em;color:var(--rust);margin-bottom:8px}
+h1{font-family:"Songti SC",SimSun,serif;font-size:30px;font-weight:900;line-height:1.25}
+.sub{margin-top:8px;color:var(--ink-soft);font-size:14px}
+h2{font-family:"Songti SC",SimSun,serif;font-size:21px;font-weight:900;margin:32px 0 12px;padding-left:10px;border-left:4px solid var(--rust)}
+p{margin:10px 0;color:var(--ink-soft)}
+ol,ul{padding-left:22px;margin:10px 0}
+li{margin:8px 0;color:var(--ink-soft)}
+strong{color:var(--ink)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--paper-2);padding:2px 6px;border-radius:3px;font-size:13px;color:var(--rust)}
+.step{background:var(--paper-2);border:1.5px solid var(--line);padding:16px 18px;margin:14px 0}
+.step-num{display:inline-block;background:var(--ink);color:#EFE9DB;font-family:ui-monospace,monospace;font-size:12px;padding:2px 10px;margin-bottom:10px;letter-spacing:.1em}
+.step h3{font-size:16px;margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--ink);color:#EFE9DB;font-weight:600;font-size:13px}
+td .name{font-family:ui-monospace,monospace;color:var(--rust);font-weight:600}
+.tip{border-left:3px solid var(--steel);background:rgba(44,68,84,.06);padding:12px 14px;margin:14px 0;font-size:14px;color:var(--ink-soft)}
+.warn{border-left:3px solid var(--rust);background:rgba(184,74,30,.07);padding:12px 14px;margin:14px 0;font-size:14px;color:var(--ink-soft)}
+.screen{background:#1C1A17;color:#EFE9DB;padding:12px 14px;border-radius:4px;font-family:ui-monospace,monospace;font-size:12px;line-height:1.8;margin:10px 0;overflow-x:auto}
+.screen b{color:#E8824A}
+.footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--ink);font-size:12px;color:var(--ink-soft);text-align:center;font-family:ui-monospace,monospace;letter-spacing:.1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top">
+  <div class="kicker">TAP &amp; GO · NFC STANDARD PACK</div>
+  <h1>使用手册<br>在 GitHub 上改你自己的展项页面</h1>
+  <div class="sub">不用装软件、不用写代码，浏览器里跟着点就行。预计 15 分钟。</div>
+</div>
+
+<h2>你会改什么</h2>
+<p>每个展项对应一个 HTML 页面文件。你要做的事就两件：<strong>改文字</strong>、<strong>换图片音视频</strong>。改完点一下保存，等一两分钟，观众手机碰 NFC 标签打开的就是新内容。</p>
+
+<h2>先选模板</h2>
+<p>文件夹里有三套风格不同的模板，挑一套顺眼的，复制一份再改（不要直接在模板原件上改）。三套都内置了音频 / 视频二选一槽位：</p>
+<table>
+  <tr><th>模板文件</th><th>排版风格</th><th>素材文件夹</th></tr>
+  <tr><td class="name">一碰即达_标准包.html</td><td>模板A · 铭牌档案风：暖米纸底、衬线标题、通栏首图压标题、铭牌三格横条</td><td><code>assets/模板A</code></td></tr>
+  <tr><td class="name">模板B_极简白.html</td><td>模板B · 卡片信息流：正文拆成一张张圆角卡片上下堆叠，插图夹在卡片之间，信息为纵向条目；纯白浅灰底、无衬线大标题</td><td><code>assets/模板B</code></td></tr>
+  <tr><td class="name">模板C_深色展厅.html</td><td>模板C · 侧边目录式：左侧固定编号目录（档案/故事/影像），点击滚动定位，右侧对应正文与图片；近黑深底、钢蓝电光强调</td><td><code>assets/模板C</code></td></tr>
+</table>
+<div class="tip">三套模板的文字改法完全一样，排版骨架各不相同；每套都能放音频或视频，二选一即可。</div>
+
+<h2>开始前</h2>
+<ol>
+  <li>登录 GitHub 账号（账号由技术组统一开通）</li>
+  <li>打开仓库：<code>waiting-create / nfc_heritage</code></li>
+  <li>进入文件夹 <code>nfc-standard-package</code></li>
+</ol>
+
+<div class="step">
+  <span class="step-num">第 1 步 · 改文字</span>
+  <h3>打开 HTML 文件，找到最顶上的 CONFIG 配置块</h3>
+  <ol>
+    <li>在文件夹里点开你选好的模板（如 <code>模板B_极简白.html</code>）</li>
+    <li>点文件右上角的 <strong>铅笔图标（Edit this file）</strong>，进入编辑</li>
+    <li>往下翻，找到被两行 <code>★★★</code> 注释夹起来的 <code>CONFIG</code> 块，长这样：</li>
+  </ol>
+  <div class="screen">
+  title:       <b>"3号窑炉：一条窑的"</b>,<br>
+  titleAccent: <b>"百年呼吸"</b>,<br>
+  lead:        <b>"从 1946 年到 2014 年……"</b>,
+  </div>
+  <p><strong>只改引号 " " 里面的字</strong>，引号、冒号、逗号、后面的注释都保留不动。每一行对应页面上的一个位置，对照表如下：</p>
+  <table>
+    <tr><th>配置项</th><th>页面位置</th></tr>
+    <tr><td class="name">kicker</td><td>首图上最小的一行编号</td></tr>
+    <tr><td class="name">title</td><td>大标题第一行</td></tr>
+    <tr><td class="name">titleAccent</td><td>大标题第二行（橙色）</td></tr>
+    <tr><td class="name">subtitle</td><td>大标题下面一行小字</td></tr>
+    <tr><td class="name">pk1 / pv1 等</td><td>中间铭牌三格：标签名和值</td></tr>
+    <tr><td class="name">sec1Title</td><td>第一段小标题</td></tr>
+    <tr><td class="name">lead</td><td>段落1：开头大段引言（衬线大字）</td></tr>
+    <tr><td class="name">body1</td><td>段落2：第二段正文</td></tr>
+    <tr><td class="name">body2</td><td>段落3：第三段正文</td></tr>
+    <tr><td class="name">photoCaption / photoYear</td><td>插图下面的图注和年份</td></tr>
+    <tr><td class="name">audioTitle / audioMeta</td><td>音频标题和来源</td></tr>
+    <tr><td class="name">videoTitle / videoMeta</td><td>视频标题和来源</td></tr>
+    <tr><td class="name">audioIntro</td><td>媒体段前面的介绍文字</td></tr>
+    <tr><td class="name">analyticsId</td><td>访问统计站点 ID（百度统计）；留空则不统计，页面不显示次数</td></tr>
+  </table>
+  <p>改完拉到页面最下面，点绿色的 <strong>Commit changes</strong>（提交）按钮，再点弹窗里的 <strong>Commit changes</strong> 确认。</p>
+  <div class="warn">不要动 CONFIG 块以外的任何代码，那些是页面样式和播放功能，碰坏了页面会显示不正常。</div>
+</div>
+
+<div class="step">
+  <span class="step-num">第 2 步 · 换图片</span>
+  <h3>把图片放进你选的那个模板文件夹</h3>
+  <table>
+    <tr><th>图片</th><th>必须改名为</th><th>用在哪套模板</th></tr>
+    <tr><td>首图（横版大场景）</td><td class="name">hero.jpg</td><td>仅模板A 用；模板B、C 没有首图位，不用放</td></tr>
+    <tr><td>插图</td><td class="name">photo.jpg</td><td>三套都用：A/B 竖版或方，C 方形</td></tr>
+  </table>
+  <ol>
+    <li>进入 <code>assets</code>，按你选的模板进对应文件夹：模板A 进 <code>模板A</code>，模板B 进 <code>模板B</code>，模板C 进 <code>模板C</code></li>
+    <li>右上角 <strong>Add file → Upload files</strong></li>
+    <li>把图片拖进去，文件名改成上面的名字（覆盖原有示例图）</li>
+    <li>拉到底部点 <strong>Commit changes</strong></li>
+  </ol>
+  <div class="tip">手机拍照原图通常 3-5MB，能直接用；超过 10MB 的图先发微信给别人再保存一次，体积就小了。注意：图片要放进对应模板的文件夹，放错文件夹页面会读不到。</div>
+</div>
+
+<div class="step">
+  <span class="step-num">第 3 步 · 换音频或视频（二选一，可选）</span>
+  <h3>每套模板都能放音频或视频，自己选一个，不用都放</h3>
+  <table>
+    <tr><th>类型</th><th>文件名</th><th>CONFIG 里填哪行</th></tr>
+    <tr><td>音频（mp3）</td><td class="name">scene.mp3</td><td><code>audioSrc</code> 填路径，<code>videoSrc</code> 填 <code>""</code></td></tr>
+    <tr><td>视频（mp4）</td><td class="name">scene.mp4</td><td><code>videoSrc</code> 填路径，<code>audioSrc</code> 填 <code>""</code></td></tr>
+    <tr><td>都没有</td><td>——</td><td>两行都填 <code>""</code>，整段自动隐藏</td></tr>
+  </table>
+  <ul>
+    <li>文件放进对应模板的素材文件夹（<code>assets/模板A</code>、<code>assets/模板B</code>、<code>assets/模板C</code>）</li>
+    <li>视频点卡片会在当前页弹出播放层，不用跳转新页面</li>
+    <li>视频建议控制在 50MB 以内，太长现场加载会慢</li>
+  </ul>
+</div>
+
+<div class="step">
+  <span class="step-num">第 3.5 步 · 接入访问统计（可选）</span>
+  <h3>访问次数在统计后台看，页面上不显示数字</h3>
+  <ol>
+    <li>打开百度统计 <code>tongji.baidu.com</code>，用百度账号登录，新增网站，填本展项页面的 GitHub Pages 链接</li>
+    <li>在后台生成统计脚本，复制站点 ID（<code>hm.baidu.com/hm.js?</code> 后面那串字符）</li>
+    <li>打开对应模板 HTML，在 CONFIG 里把 ID 填进 <code>analyticsId</code> 一行</li>
+    <li>保存提交，等 1-2 分钟，回到统计后台就能看到访问次数（PV）、人数（UV）和设备来源</li>
+  </ol>
+  <div class="tip">不填 <code>analyticsId</code> 就不会加载统计，页面也不出现次数数字。统计只记录访问次数和人数，不收集姓名、手机号等个人信息。</div>
+</div>
+
+<div class="step">
+  <span class="step-num">第 4 步 · 看效果</span>
+  <h3>打开展示链接预览</h3>
+  <ol>
+    <li>打开你的展项页面链接（技术组给你，形如 <code>https://waiting-create.github.io/nfc_heritage/...</code>）</li>
+    <li>GitHub Pages 生效有 1-2 分钟延迟，看不到新内容就按 <strong>F5</strong> 刷新</li>
+    <li>检查：图片对不对、文字改没改成功、音频/视频能不能点开播放</li>
+  </ol>
+  <p>有问题就回到第 1 步再改一遍，保存后刷新查看。</p>
+</div>
+
+<h2>常见问题</h2>
+<p><strong>Q：我改错了想撤回怎么办？</strong><br>
+A：在 HTML 文件页面点 <strong>History</strong>，可以看到每次提交，点进旧版本 → 右上角三点 → Restore 即可恢复。</p>
+<p><strong>Q：图片传上去页面还是旧图？</strong><br>
+A：等 1 分钟再刷新；还是旧图就强制刷新（Ctrl+F5）。确认上传时文件名和 CONFIG 里写的完全一致，包括大小写和后缀。</p>
+<p><strong>Q：标题里想换行怎么办？</strong><br>
+A：不用自己加符号，<code>title</code> 是第一行、<code>titleAccent</code> 是第二行，各写各的就行。</p>
+<p><strong>Q：之后想再改内容？</strong><br>
+A：重复第 1 步改文字、第 2 步换图即可，链接不变，NFC 标签不用重写。</p>
+<p><strong>Q：音频和视频能同时放吗？</strong><br>
+A：不能，每套模板里都是二选一。填了视频就隐藏音频卡片，填了音频就隐藏视频卡片，不会两个一起出现。</p>
+<p><strong>Q：访问次数在哪里看？页面上怎么没有数字？</strong><br>
+A：页面本身不显示访问次数。有人打开页面后，访问记录会送到统计平台后台，在那里看访问次数（PV）、访问人数（UV）和设备来源。要启用统计，先在百度统计后台新增站点、复制站点 ID，填到 CONFIG 的 <code>analyticsId</code>；留空则不加载统计，页面也不出现任何次数数字。</p>
+
+<div class="footer">一碰即达 · TAP & GO · 华新1907 工业遗产活化 NFC 服务站</div>
+
+</div>
+</body>
+</html>

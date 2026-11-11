@@ -123,27 +123,19 @@ section{padding:34px 0 6px}
 .audio-card.playing .wave i{animation:eq 1s ease-in-out infinite}
 @keyframes eq{0%,100%{height:5px}50%{height:20px}}
 
-/* ===== 数据条（匿名统计） ===== */
-.stat-band{
-  margin:38px -20px 0;padding:26px 20px 22px;
-  background:var(--steel);color:#EFE9DB;
-}
-.stat-band .kicker{
-  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;
-  letter-spacing:.2em;opacity:.7;margin-bottom:10px;
-}
-.stat-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.stat-num{
-  font-family:"Source Han Serif SC",Georgia,serif;
-  font-size:46px;font-weight:900;line-height:1;color:#E8824A;
-  font-variant-numeric:tabular-nums;
-}
-.stat-label{font-size:13px;opacity:.9;max-width:220px}
-.stat-meta{
-  margin-top:14px;padding-top:12px;border-top:1px solid rgba(239,233,219,.25);
-  font-size:11.5px;opacity:.7;font-family:ui-monospace,Menlo,Consolas,monospace;
-  letter-spacing:.03em;
-}
+/* ===== 视频卡片 ===== */
+.video-card{margin-top:18px;border:1.5px solid var(--line);background:var(--ink);color:#EFE9DB;overflow:hidden;cursor:pointer}
+.video-thumb{position:relative;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}
+.video-thumb .play{width:56px;height:56px;border-radius:50%;background:var(--rust);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.video-info{padding:12px 14px}
+.video-title{font-size:14px;font-weight:700}
+.video-meta{font-size:11px;opacity:.7;margin-top:2px;font-family:ui-monospace,Menlo,Consolas,monospace}
+
+/* ===== 视频弹窗 ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.modal video{width:100%;max-width:720px;max-height:80vh}
+.modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:20px;cursor:pointer}
 
 /* ===== 页脚 ===== */
 footer{padding:22px 0 0;text-align:center}
@@ -163,7 +155,7 @@ footer{padding:22px 0 0;text-align:center}
 <header class="topbar">
   <div class="brand">
     <svg width="18" height="18" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#1C1A17"/><path d="M11 11c2.2-2.2 5.8-2.2 8 0M8 8c3.5-3.5 12.5-3.5 16 0M13 13c1.1-1.1 2.9-1.1 4 0M16 16v.1" stroke="#C9501E" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
-    一碰即达 · NFC 服务站
+    <span id="cfg_brand">一碰即达 · NFC 服务站</span>
   </div>
   <div class="tag-nfc">STANDARD</div>
 </header>
@@ -171,80 +163,200 @@ footer{padding:22px 0 0;text-align:center}
 <div class="wrap">
 
   <figure class="hero">
-    <img src="assets/hero.jpg" alt="华新1907水泥旧址黄昏厂房">
+    <img id="img_hero" src="assets/hero.jpg" alt="首图">
     <div class="hero-meta">
-      <div class="hero-kicker">HUAXIN 1907 · 展项 H-03</div>
-      <h1>3号窑炉：<br>一条窑的<span class="accent">百年呼吸</span></h1>
-      <div class="hero-sub">熟料车间 · 回转窑 1946 年投产</div>
+      <div class="hero-kicker" id="cfg_kicker">HUAXIN 1907 · 展项 H-03</div>
+      <h1><span id="cfg_title">3号窑炉：一条窑的</span><br><span class="accent" id="cfg_titleAccent">百年呼吸</span></h1>
+      <div class="hero-sub" id="cfg_subtitle">熟料车间 · 回转窑 1946 年投产</div>
     </div>
   </figure>
 
   <div class="plate">
-    <div><div class="k">展项编号</div><div class="v">H-03</div></div>
-    <div><div class="k">所在位置</div><div class="v">熟料车间</div></div>
-    <div><div class="k">建造年代</div><div class="v">1946</div></div>
+    <div><div class="k" id="cfg_pk1">展项编号</div><div class="v" id="cfg_pv1">H-03</div></div>
+    <div><div class="k" id="cfg_pk2">所在位置</div><div class="v" id="cfg_pv2">熟料车间</div></div>
+    <div><div class="k" id="cfg_pk3">建造年代</div><div class="v" id="cfg_pv3">1946</div></div>
   </div>
 
   <section>
     <div class="sec-head">
       <span class="sec-num">01</span>
-      <span class="sec-title">这一座窑</span>
+      <span class="sec-title" id="cfg_sec1Title">这一座窑</span>
       <span class="sec-rule"></span>
     </div>
-    <p class="lead">
+    <p class="lead" id="cfg_lead">
       从 1946 年到 2014 年，这条长逾百米的回转窑在这里转了六十八年。它吞进石灰石与黏土，吐出支撑这座城市地基的水泥，也吞下了一整代工人的青春。
     </p>
-    <p class="body-p">
+    <p class="body-p" id="cfg_body1">
       窑头的温度常年保持在一千四百摄氏度。工人换班时隔着隔热玻璃看火焰的颜色——橙黄是温的，惨白是过头的，橙红才是刚刚好。如今炉火熄了，窑身还横在那里，像一头卧着的兽。
     </p>
   </section>
 
-  <figure class="fig">
-    <img src="assets/valve.jpg" alt="车间里留存的铸铁阀门">
-    <figcaption><span>图 · 车间遗留铸铁阀门</span><span>1946</span></figcaption>
+  <figure class="fig" id="photoFig">
+    <img id="img_photo" src="assets/photo.jpg" alt="插图">
+    <figcaption><span id="cfg_photoCaption">图 · 车间遗留铸铁阀门</span><span id="cfg_photoYear">1946</span></figcaption>
   </figure>
 
-  <section>
+  <section id="mediaSection">
     <div class="sec-head">
       <span class="sec-num">02</span>
-      <span class="sec-title">听见车间</span>
+      <span class="sec-title" id="cfg_sec2Title">听见车间</span>
       <span class="sec-rule"></span>
     </div>
-    <p class="body-p">
+    <p class="body-p" id="cfg_audioIntro">
       戴上耳机，或直接点开下面这条声景。它来自当年工段的老工人回忆，由我们与声景小组一起复原——不是音效，是这个空间原本的呼吸。
     </p>
+
+    <!-- 音频卡片 -->
     <div class="audio-card" id="audioCard">
       <button class="audio-btn" id="audioBtn" aria-label="播放声景">
         <svg id="icoPlay" width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
         <svg id="icoPause" width="20" height="20" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
       </button>
       <div class="audio-info">
-        <div class="audio-title">窑头火声 · 白班换岗</div>
-        <div class="audio-dur"><span id="audioDur">加载中…</span> · 声景小组复原</div>
+        <div class="audio-title" id="cfg_audioTitle">窑头火声 · 白班换岗</div>
+        <div class="audio-dur"><span id="audioDur">加载中…</span> · <span id="cfg_audioMeta">声景小组复原</span></div>
         <div class="wave" id="wave"></div>
       </div>
-      <audio id="audioEl" src="assets/scene.mp3" preload="metadata"></audio>
+      <audio id="audioEl" preload="metadata"></audio>
+    </div>
+
+    <!-- 视频卡片（默认隐藏，填了视频才显示） -->
+    <div class="video-card" id="videoCard" style="display:none">
+      <div class="video-thumb">
+        <div class="play">
+          <svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#F2ECDD"/></svg>
+        </div>
+      </div>
+      <div class="video-info">
+        <div class="video-title" id="cfg_videoTitle">窑炉旧影 · 1946</div>
+        <div class="video-meta" id="cfg_videoMeta">档案影像复原</div>
+      </div>
     </div>
   </section>
 
-  <div class="stat-band">
-    <div class="kicker">ANONYMOUS NFC READS · 匿名触碰统计</div>
-    <div class="stat-row">
-      <div class="stat-num" id="readCount">—</div>
-      <div class="stat-label">人次通过触碰本展项标签，看到了这段故事。</div>
-    </div>
-    <div class="stat-meta">不含任何个人信息 · 仅记录触碰次数 · 数据每 24 小时更新</div>
+  <!-- 视频播放弹窗 -->
+  <div class="modal" id="videoModal">
+    <button class="modal-close" id="modalClose" aria-label="关闭">✕</button>
+    <video id="modalVideo" controls playsinline></video>
   </div>
 
   <footer>
-    <div class="foot-brand">一 碰 即 达 · TAP &amp; GO</div>
-    <div class="foot-sub">HUAXIN 1907 HERITAGE · NFC STANDARD PACK</div>
+    <div class="foot-brand" id="cfg_footer">一 碰 即 达 · TAP &amp; GO</div>
+    <div class="foot-sub" id="cfg_footerSub">HUAXIN 1907 HERITAGE · NFC STANDARD PACK</div>
   </footer>
 
 </div>
 
 <script>
-// 声波条：生成 26 根
+/* ============================================================
+ * ★★★  你要改的内容，全部在下面这一块，其他地方不要动  ★★★
+ *
+ * 改法：只改引号 " " 里面的字；引号、冒号、逗号都保留。
+ * 图片和音视频不用改代码，把文件按下面的文件名放进 assets/模板A 文件夹即可。
+ * 第二段音频 / 视频二选一：填了视频就把 audioSrc 改成 ""，
+ * 填了音频就把 videoSrc 改成 ""；都没有就两个都填 ""。
+ * ============================================================ */
+const CONFIG = {
+
+  // —— 左上角品牌名（一般不用改）——
+  brand: "一碰即达 · NFC 服务站",
+
+  // —— 首图上的文字 ——
+  kicker:      "HUAXIN 1907 · 展项 H-03",   // 最小那行编号
+  title:       "3号窑炉：一条窑的",          // 大标题第一行
+  titleAccent: "百年呼吸",                    // 大标题第二行（橙色）
+  subtitle:    "熟料车间 · 回转窑 1946 年投产", // 大标题下面一行小字
+
+  // —— 中间铭牌三格（标签 / 值）——
+  pk1: "展项编号", pv1: "H-03",
+  pk2: "所在位置", pv2: "熟料车间",
+  pk3: "建造年代", pv3: "1946",
+
+  // —— 第一段文字 ——
+  sec1Title: "这一座窑",
+  lead:      "从 1946 年到 2014 年，这条长逾百米的回转窑在这里转了六十八年。它吞进石灰石与黏土，吐出支撑这座城市地基的水泥，也吞下了一整代工人的青春。",
+  body1:     "窑头的温度常年保持在一千四百摄氏度。工人换班时隔着隔热玻璃看火焰的颜色——橙黄是温的，惨白是过头的，橙红才是刚刚好。如今炉火熄了，窑身还横在那里，像一头卧着的兽。",
+
+  // —— 中间插图 ——
+  photoCaption: "图 · 车间遗留铸铁阀门",
+  photoYear:    "1946",
+
+  // —— 第二段（音频 / 视频，二选一）——
+  sec2Title:  "听见车间",
+  audioIntro: "戴上耳机，或直接点开下面这条声景。它来自当年工段的老工人回忆，由我们与声景小组一起复原——不是音效，是这个空间原本的呼吸。",
+  audioTitle: "窑头火声 · 白班换岗",
+  audioMeta:  "声景小组复原",
+  videoTitle: "窑炉旧影 · 1946",
+  videoMeta:  "档案影像复原",
+
+  // —— 访问统计：填统计平台给的站点 ID（百度统计）；留 "" 则不加载统计，页面不显示次数 ——
+  analyticsId: "",
+
+  // —— 页脚（一般不用改）——
+  footer:    "一 碰 即 达 · TAP & GO",
+  footerSub: "HUAXIN 1907 HERITAGE · NFC STANDARD PACK",
+
+  // —— 媒体文件路径：把文件按这些名字放进 assets/模板A 文件夹即可 ——
+  heroImg:  "assets/模板A/hero.jpg",    // 首图（横版）
+  photoImg: "assets/模板A/photo.jpg",   // 中间插图
+  audioSrc: "assets/模板A/scene.mp3",  // 音频（mp3；二选一，不用就填 ""）
+  videoSrc: "",                        // 视频（mp4；二选一，不用就填 ""）
+};
+/* ============================================================
+ *  ★★★  以上是你唯一需要改的地方  ★★★
+ * ============================================================ */
+
+// —— 下面是自动填充和功能代码，不要动 ——
+(function(){
+  function t(id, val){ var el=document.getElementById(id); if(el && val!=null && val!=='') el.textContent=val; }
+  t('cfg_brand',CONFIG.brand);
+  t('cfg_kicker',CONFIG.kicker);
+  t('cfg_title',CONFIG.title);
+  t('cfg_titleAccent',CONFIG.titleAccent);
+  t('cfg_subtitle',CONFIG.subtitle);
+  t('cfg_pk1',CONFIG.pk1); t('cfg_pv1',CONFIG.pv1);
+  t('cfg_pk2',CONFIG.pk2); t('cfg_pv2',CONFIG.pv2);
+  t('cfg_pk3',CONFIG.pk3); t('cfg_pv3',CONFIG.pv3);
+  t('cfg_sec1Title',CONFIG.sec1Title);
+  t('cfg_lead',CONFIG.lead);
+  t('cfg_body1',CONFIG.body1);
+  t('cfg_photoCaption',CONFIG.photoCaption);
+  t('cfg_photoYear',CONFIG.photoYear);
+  t('cfg_sec2Title',CONFIG.sec2Title);
+  t('cfg_audioIntro',CONFIG.audioIntro);
+  t('cfg_audioTitle',CONFIG.audioTitle);
+  t('cfg_audioMeta',CONFIG.audioMeta);
+  t('cfg_videoTitle',CONFIG.videoTitle);
+  t('cfg_videoMeta',CONFIG.videoMeta);
+  t('cfg_footer',CONFIG.footer);
+  t('cfg_footerSub',CONFIG.footerSub);
+
+  document.getElementById('img_hero').src = CONFIG.heroImg;
+  document.getElementById('img_photo').src = CONFIG.photoImg;
+
+  // 第二段媒体：视频优先，其次音频，都没有就隐藏整段
+  var audioEl = document.getElementById('audioEl');
+  var audioCard = document.getElementById('audioCard');
+  var videoCard = document.getElementById('videoCard');
+  var hasVideo = !!CONFIG.videoSrc;
+  var hasAudio = !!CONFIG.audioSrc;
+
+  if(hasVideo){
+    videoCard.style.display='block';
+    audioCard.style.display='none';
+    audioEl.src = '';
+  }else if(hasAudio){
+    videoCard.style.display='none';
+    audioCard.style.display='flex';
+    audioEl.src = CONFIG.audioSrc;
+  }else{
+    document.getElementById('mediaSection').style.display='none';
+  }
+
+  document.title = (CONFIG.title||'展项') + ' · 一碰即达';
+})();
+
+// 声波条
 (function(){
   var w = document.getElementById('wave');
   for (var i=0;i<26;i++){
@@ -254,7 +366,7 @@ footer{padding:22px 0 0;text-align:center}
   }
 })();
 
-// 音频播放：真实读取 assets/scene.mp3
+// 音频播放
 (function(){
   var card=document.getElementById('audioCard');
   var btn=document.getElementById('audioBtn');
@@ -275,32 +387,50 @@ footer{padding:22px 0 0;text-align:center}
     ipa.style.display=p?'block':'none';
   }
   btn.addEventListener('click',function(){
-    if(audio.paused){ audio.play().catch(function(){ durEl.textContent='未找到 assets/scene.mp3'; }); }
+    if(audio.paused){ audio.play().catch(function(){ durEl.textContent='未找到音频文件'; }); }
     else { audio.pause(); }
   });
   audio.addEventListener('loadedmetadata',function(){ durEl.textContent=fmt(audio.duration); });
   audio.addEventListener('play',syncUI);
   audio.addEventListener('pause',syncUI);
   audio.addEventListener('ended',syncUI);
-  audio.addEventListener('error',function(){ durEl.textContent='未找到 assets/scene.mp3'; });
+  audio.addEventListener('error',function(){ durEl.textContent='未找到音频文件'; });
 })();
 
-// 匿名统计：localStorage 模拟，每次打开 +1
+// 视频弹窗：点卡片打开，关闭时停止播放
 (function(){
-  var KEY='nfc_h03_reads';
-  var base=1284; // 示例累计
-  var n=parseInt(localStorage.getItem(KEY)||'0',10);
-  n+=1;
-  localStorage.setItem(KEY,String(n));
-  var total=base+n;
-  var el=document.getElementById('readCount');
-  var start=total-1,end=total,dur=600,t0=performance.now();
-  function tick(t){
-    var k=Math.min(1,(t-t0)/dur);
-    el.textContent=Math.round(start+(end-start)*k);
-    if(k<1) requestAnimationFrame(tick);
+  var modal=document.getElementById('videoModal');
+  var video=document.getElementById('modalVideo');
+  var card=document.getElementById('videoCard');
+  var close=document.getElementById('modalClose');
+
+  function open(){
+    if(!CONFIG.videoSrc) return;
+    video.src=CONFIG.videoSrc;
+    modal.classList.add('open');
+    video.play().catch(function(){});
   }
-  requestAnimationFrame(tick);
+  function closeModal(){
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    modal.classList.remove('open');
+  }
+  card.addEventListener('click',open);
+  close.addEventListener('click',closeModal);
+  modal.addEventListener('click',function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+})();
+
+// 访问统计：填了 analyticsId 才加载统计脚本（百度统计），访问次数在统计平台后台查看
+(function(){
+  var id = CONFIG.analyticsId;
+  if(!id) return;
+  window._hmt = window._hmt || [];
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?' + id;
+  hm.async = true;
+  document.head.appendChild(hm);
 })();
 </script>
 </body>
