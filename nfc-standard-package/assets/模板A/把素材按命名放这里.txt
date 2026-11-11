@@ -1,0 +1,11 @@
+素材文件命名约定（把文件按下面的名字放进本文件夹，页面自动加载）：
+
+  hero.jpg     —— 首图（横版大场景，16:9 左右）
+  photo.jpg    —— 中间插图（竖版或方均可）
+  scene.mp3    —— 音频（mp3/m4a，可选）
+  scene.mp4    —— 视频（mp4，可选；和音频二选一）
+
+在 GitHub 网页上上传：进入本文件夹 → Add file → Upload files → 拖入文件 → Commit。
+音频和视频二选一：传了 scene.mp4，就把 HTML 里 CONFIG 的 audioSrc 改成 ""；
+传了 scene.mp3，就把 videoSrc 改成 ""；两个都没有就两个都填 ""。
+视频建议控制在 50MB 以内；图片若用 png，需同步改 CONFIG 里 heroImg / photoImg 后缀。
